@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es2020",
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "module": "CommonJS",
+  },
+  "exclude": ["node_modules", "**/*.sys-spec.ts"]
+}

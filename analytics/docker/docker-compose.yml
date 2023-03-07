@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  sqs:
+    image: softwaremill/elasticmq
+    expose:
+      - "9324"
+    ports:
+      - "9324:9324"
+      - "9325:9325"
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    env_file: .env
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+
+  message_processor:
+    build:
+      context: ../modules/lambda/sqs/message_processor
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env
+    environment:
+      DOCUMENT_DB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@localhost:27017/${MONGO_INITDB_DATABASE}?authSource=admin
+    network_mode: host
+    depends_on:
+      - sqs
+      - mongo

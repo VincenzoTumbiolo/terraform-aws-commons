@@ -1,0 +1,25 @@
+.terraform.lock.hcl
+/.terraform
+commons/.DS_Store
+node_modules
+.nvm
+
+dist
+yarn-error.log
+.DS_Store
+*.tfvars
+.env
+.vscode
+.vscode/targhets.log
+.vscode/configurationCache.log
+.vscode/dryrun.log
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+**/src/*.js
+**/src/*/*.js
+Makefile
+backend.tf
