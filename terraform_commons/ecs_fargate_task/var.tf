@@ -40,3 +40,18 @@ variable "environments" {
   description = "array of environments for task"
   default     = []
 }
+variable "ddog_enable" {
+  type        = bool
+  default     = false
+  description = "true for activate datadog"
+}
+variable "ddog_environments" {
+  type        = list(any)
+  description = "array of datadog environments for task"
+  default     = []
+}
+variable "ddog_image" {
+  type        = string
+  description = "datadog container image"
+  default     = "datadog/agent:latest"
+}

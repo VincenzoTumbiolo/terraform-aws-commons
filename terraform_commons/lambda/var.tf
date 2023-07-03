@@ -49,10 +49,6 @@ DESC
   default     = []
 }
 
-variable "account_id" {
-  type = string
-}
-
 variable "function_name" {
   description = "A unique name for your Lambda Function."
   type        = string
