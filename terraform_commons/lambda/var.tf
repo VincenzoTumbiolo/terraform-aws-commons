@@ -28,7 +28,7 @@ variable "build_command" {
 variable "build_triggers" {
   description = "A map of values which should cause the build command to re-run. Values are meant to be interpolated references to variables or attributes of other resources."
   default = {
-    always_run = "${timestamp()}"
+    always_run = ""
   }
 }
 
