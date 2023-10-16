@@ -4,7 +4,7 @@
 resource "null_resource" "build" {
   count = var.build_command != "" ? 1 : 0
 
-  triggers = var.build_triggers == [] ? [] : var.build_triggers
+  triggers = var.build_triggers
 
   provisioner "local-exec" {
     command     = var.build_command
