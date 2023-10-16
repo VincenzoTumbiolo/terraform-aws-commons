@@ -1,8 +1,3 @@
-resource "aws_cloudwatch_log_group" "log-group" {
-  name              = "/aws/lambda/${var.function_name}"
-  retention_in_days = var.log_retention
-  tags              = merge(var.tags, var.cloudwatch_tags, { "Name" = "/aws/lambda/${var.function_name}" })
-}
 #---------------------------------------------------------------------------------------------------
 # Lambda functions
 #---------------------------------------------------------------------------------------------------
@@ -21,6 +16,7 @@ resource "aws_lambda_function" "this" {
   layers                         = var.layers
   timeout                        = var.timeout
   publish                        = var.publish
+  architectures                  = [var.architecture]
 
   dynamic "dead_letter_config" {
     for_each = var.dead_letter_config == null ? [] : [var.dead_letter_config]
@@ -57,7 +53,13 @@ resource "aws_lambda_function" "this" {
   }
 
   depends_on = [
-  aws_cloudwatch_log_group.log-group]
+  aws_cloudwatch_log_group.log-group, data.archive_file.source]
+}
+
+resource "aws_cloudwatch_log_group" "log-group" {
+  name              = "/aws/lambda/${var.function_name}"
+  retention_in_days = var.log_retention
+  tags              = merge(var.tags, var.cloudwatch_tags, { "Name" = "/aws/lambda/${var.function_name}" })
 }
 
 resource "aws_cloudwatch_metric_alarm" "lambda-throttles" {

@@ -14,7 +14,7 @@ variable "lambda_arn" {
 
 variable "ttl" {
   description = "time to live of authorizer policy"
-  default     = 300
+  default     = 0
 }
 
 variable "function_name" {

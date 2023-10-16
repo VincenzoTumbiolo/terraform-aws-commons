@@ -8,4 +8,8 @@ resource "aws_api_gateway_gateway_response" "unauthorized_response" {
   response_templates = {
     "application/json" = var.json_response_templates
   }
+
+  response_parameters = {
+    "gatewayresponse.header.Access-Control-Allow-Origin" = "'*'"
+  }
 }

@@ -8,9 +8,23 @@ variable "lb_forward_target_group_name" {
   type        = string
   description = "name for target group"
 }
+variable "targhet_register" {
+  type    = bool
+  default = false
+}
 variable "lb_target_type" {
   type        = string
   description = "name for target group"
+}
+variable "lb_target_id" {
+  type        = string
+  description = "id of targhet for target group"
+  default     = "null"
+}
+variable "lb_target_port" {
+  type        = string
+  description = "port of targhet for target group"
+  default     = "null"
 }
 variable "protocol" {
   type        = string

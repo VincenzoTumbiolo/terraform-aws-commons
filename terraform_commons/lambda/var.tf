@@ -31,7 +31,19 @@ variable "build_triggers" {
 }
 
 variable "source_dir" {
-  description = "A path to the directory which contains source files."
+  description = "A path to the directory which contains source files builded."
+  type        = string
+  default     = null
+}
+
+variable "source_file" {
+  description = "A file which contains source files builded."
+  type        = string
+  default     = null
+}
+
+variable "working_dir" {
+  description = "A path to the directory which contains source files to build."
   type        = string
 }
 
@@ -40,22 +52,15 @@ variable "output_path" {
   type        = string
 }
 
-variable "exclude_files" {
-  description = <<DESC
-A list of directories or folders to ignore, e.g.
-exclude_files = ["test", "src/**/*.ts"]
-DESC
-  type        = list(string)
-  default     = []
-}
-
-variable "account_id" {
-  type = string
-}
-
 variable "function_name" {
   description = "A unique name for your Lambda Function."
   type        = string
+}
+
+variable "architecture" {
+  type        = string
+  description = "The architecture of the function's runtime."
+  default     = "x86_64"
 }
 
 variable "runtime" {
@@ -131,13 +136,6 @@ variable "tracing_config" {
     mode = string
   })
   default = null
-}
-
-variable "allowed_services" {
-  description = "A list of AWS Services that are allowed to access this lambda."
-  type        = list(string)
-  default = [
-  "lambda.amazonaws.com"]
 }
 
 variable "project_prefix" {

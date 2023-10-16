@@ -88,9 +88,9 @@ resource "aws_ecs_task_definition" "this" {
   memory                   = var.task_memory
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
-  container_definitions = jsonencode([
-    {
-      name        = "${var.ecs_name}-task"
+  container_definitions = jsonencode(
+    flatten([{
+      name        = "${var.ecs_name}-container"
       image       = var.ecr_repository_url
       essential   = true
       environment = var.environments
@@ -107,8 +107,11 @@ resource "aws_ecs_task_definition" "this" {
           awslogs-stream-prefix = "ecs"
         }
       }
-    }
-  ])
+      }, var.ddog_enable ? [{
+        name        = "${var.ecs_name}-ddog-container",
+        image       = var.ddog_image,
+        environment = var.ddog_environments
+  }] : []]))
 
   tags = var.tags
 }

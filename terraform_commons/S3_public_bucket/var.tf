@@ -15,8 +15,3 @@ variable "versioned" {
 variable "tags" {
   description = "A mapping of tags to assign to resources."
 }
-
-variable "policy_statements" {
-  description = "A mapping of stateements."
-  default     = []
-}

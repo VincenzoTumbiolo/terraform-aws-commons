@@ -4,24 +4,19 @@
 resource "null_resource" "build" {
   count = var.build_command != "" ? 1 : 0
 
-  triggers = var.build_triggers
+  triggers = var.build_triggers == [] ? [] : var.build_triggers
 
   provisioner "local-exec" {
-    command = var.build_command
+    command     = var.build_command
+    working_dir = var.working_dir
   }
-}
-
-# Trick to run the build command before archiving.
-# See below for more detail.
-# https://github.com/terraform-providers/terraform-provider-archive/issues/11
-locals {
-  build_id   = length(null_resource.build) > 0 ? null_resource.build[0].id : ""
-  source_dir = var.source_dir
 }
 
 data "archive_file" "source" {
   type        = "zip"
-  source_dir  = var.source_dir
-  excludes    = var.exclude_files
+  source_file = var.source_file != null ? var.source_file : null
+  source_dir  = var.source_dir != null ? var.source_dir : null
   output_path = var.output_path
+
+  depends_on = [null_resource.build]
 }
